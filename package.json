@@ -1,0 +1,55 @@
+{
+  "name": "fantasta",
+  "productName": "Fantasta",
+  "version": "1.0.0",
+  "description": "Banco d'asta per il Fantacalcio: listone, assegnazioni, rose e formazioni",
+  "main": "main.js",
+  "author": "Alessandro Botti",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "smoke": "electron . --smoke",
+    "dist": "electron-builder --mac --arm64"
+  },
+  "build": {
+    "appId": "it.inema.fantasta",
+    "productName": "Fantasta",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "xlsx.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.sports",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "identity": null
+    },
+    "dmg": {
+      "title": "Fantasta"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'">
+<title>Fantasta</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">Fanta<span>sta</span></div>
+    <div class="spacer"></div>
+    <div class="stato"><span class="dot" id="spia"></span><span id="spiaTxt">salvato</span></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-v="listone" aria-selected="true">Listone</button>
+    <button class="tab" role="tab" data-v="squadre" aria-selected="false">Squadre</button>
+    <button class="tab" role="tab" data-v="rosa" aria-selected="false">La mia rosa</button>
+    <button class="tab" role="tab" data-v="setup" aria-selected="false">Impostazioni</button>
+  </nav>
+
+  <main class="corpo" id="corpo">
+    <!-- LISTONE -->
+    <section id="vListone">
+      <div class="filtri" id="barraFiltri">
+        <div class="cerca">
+          <input id="q" type="search" placeholder="Cerca giocatore o squadra" autocomplete="off">
+          <span class="lente">⌕</span><span class="slash">/</span>
+        </div>
+        <div class="seg" role="group" aria-label="Ruolo">
+          <button data-ruolo="" aria-pressed="true">Tutti</button>
+          <button data-ruolo="P" aria-pressed="false">Portieri</button>
+          <button data-ruolo="D" aria-pressed="false">Difensori</button>
+          <button data-ruolo="C" aria-pressed="false">Centrocamp.</button>
+          <button data-ruolo="A" aria-pressed="false">Attaccanti</button>
+        </div>
+        <button class="tog" id="togLiberi" aria-pressed="false">Solo liberi<span class="kb">L</span></button>
+        <button class="tog" id="togMiei" aria-pressed="false">I miei<span class="kb">M</span></button>
+        <select class="filtro" id="selSquadra"><option value="">Tutte le squadre</option></select>
+        <span class="conta" id="conta"></span>
+      </div>
+      <div id="sezioni"></div>
+    </section>
+
+    <!-- SQUADRE -->
+    <section id="vSquadre" class="hide"><div class="griglia" id="griglia"></div></section>
+
+    <!-- LA MIA ROSA -->
+    <section id="vRosa" class="hide"><div id="boxRosa"></div></section>
+
+    <!-- IMPOSTAZIONI -->
+    <section id="vSetup" class="hide">
+      <div class="pannello">
+        <h3>Partecipanti</h3>
+        <p class="aiuto">Quanti siete e come vi chiamate. Segna qual è la tua squadra:
+          quella finisce nella scheda «La mia rosa».</p>
+        <div class="campo-f"><label for="nPart">Numero di partecipanti</label>
+          <input type="number" id="nPart" min="2" max="20" step="1"></div>
+        <div id="nomi"></div>
+        <div class="campo-f" style="margin-top:12px"><label for="selIo">La mia squadra</label>
+          <select id="selIo"></select></div>
+      </div>
+
+      <div class="pannello">
+        <h3>Regole della lega</h3>
+        <p class="aiuto">Crediti a testa e quanti giocatori per reparto: servono per i contatori
+          e per sapere quando una rosa è completa.</p>
+        <div class="campo-f"><label for="budget">Crediti a testa</label>
+          <input type="number" id="budget" min="0" step="1"></div>
+        <div class="campo-f"><label>Giocatori per reparto</label>
+          <input type="number" id="slP" min="0" max="12"> P
+          <input type="number" id="slD" min="0" max="20"> D
+          <input type="number" id="slC" min="0" max="20"> C
+          <input type="number" id="slA" min="0" max="20"> A</div>
+      </div>
+
+      <div class="pannello">
+        <h3>Listone</h3>
+        <p class="aiuto">Quando ti aggiorno il file Excel del listone, caricalo qui:
+          Fantasta rilegge nomi, statistiche e ordine, e tiene le assegnazioni
+          dei giocatori che ci sono ancora.</p>
+        <div class="bottoni">
+          <button class="btn oro" id="btnListone">Carica un listone aggiornato…</button>
+          <button class="btn" id="btnListoneStd">Torna a quello di serie</button>
+        </div>
+        <p class="nota" id="notaListone"></p>
+      </div>
+
+      <div class="pannello">
+        <h3>Backup ed export</h3>
+        <p class="aiuto">L'asta si salva da sola a ogni mossa. Il backup serve per portarla
+          su un altro computer o per tenere una copia prima di azzerare.</p>
+        <div class="bottoni">
+          <button class="btn" id="btnBkEsp">Esporta backup…</button>
+          <button class="btn" id="btnBkImp">Importa backup…</button>
+          <button class="btn oro" id="btnExcel">Scarica l'Excel finale…</button>
+          <button class="btn rosso" id="btnAzzera">Azzera l'asta</button>
+        </div>
+        <p class="nota" id="notaInfo"></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
