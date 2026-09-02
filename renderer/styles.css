@@ -4,10 +4,10 @@
    hanno soffiato.                                                    */
 :root{
   --bg:#F4F7F7; --surface:#FFFFFF; --surface-2:#EAF0F1; --surface-3:#DDE6E8;
-  --ink:#101D24; --ink-2:#3C525E; --muted:#5F7885;
+  --ink:#101D24; --ink-2:#3C525E; --muted:#566F7C;
   --line:#D6E1E4; --line-2:#BFCFD4;
-  --gold:#9A6A10; --gold-bg:#FBEFD6; --gold-ink:#FFFFFF; --gold-solid:#B8801C;
-  --mine:#0F7A52; --mine-bg:#DAF0E6;
+  --gold:#8A5E0B; --gold-bg:#FBEFD6; --gold-ink:#FFFFFF; --gold-solid:#8F6212;
+  --mine:#0C6845; --mine-bg:#DAF0E6;
   --taken:#B23A3A; --taken-bg:#FBE3E3;
   --shadow:0 1px 2px rgba(16,29,36,.06), 0 10px 28px -14px rgba(16,29,36,.28);
   --shadow-lift:0 2px 6px rgba(16,29,36,.10), 0 22px 46px -18px rgba(16,29,36,.38);
