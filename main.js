@@ -51,6 +51,7 @@ function listoneDaFogli(fogli) {
       rm: col("rm", "ruolo mantra"), sq: col("squadra 26", "squadra"),
       fm: col("fm"), pres: col("presenze"), gol: col("gol"), ass: col("assist"),
       camp: col("campionato"), sq25: col("squadra 25"), fascia: col("fascia"), note: col("note"),
+      rig: col("rigorista"),
     };
     const num = (v) => {
       if (v === null || v === undefined || v === "") return null;
@@ -75,6 +76,13 @@ function listoneDaFogli(fogli) {
         c: c.camp >= 0 ? txt(riga[c.camp]) : "",
         s2: c.sq25 >= 0 ? txt(riga[c.sq25]) : "",
         f: c.fascia >= 0 ? txt(riga[c.fascia]) : "",
+        r: (() => {                                  // "1a scelta" / "2a scelta" / vuoto
+          if (c.rig < 0) return null;
+          const v = txt(riga[c.rig]).toLowerCase();
+          if (!v) return null;
+          if (v.startsWith("2")) return 2;
+          return 1;
+        })(),
         nt: c.note >= 0 ? txt(riga[c.note]) : "",
       });
     }

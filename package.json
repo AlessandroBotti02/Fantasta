@@ -1,8 +1,8 @@
 {
   "name": "fantasta",
   "productName": "Fantasta",
-  "version": "1.0.0",
-  "description": "Banco d'asta per il Fantacalcio: listone, assegnazioni, rose e formazioni",
+  "version": "1.1.0",
+  "description": "Banco d'asta per il Fantacalcio: listone aggiornato, assegnazioni, rose, formazioni e rigoristi",
   "main": "main.js",
   "author": "Alessandro Botti",
   "license": "MIT",

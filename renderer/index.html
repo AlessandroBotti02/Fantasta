@@ -11,6 +11,7 @@
 <div class="app">
   <header class="top">
     <div class="brand">Fanta<span>sta</span></div>
+    <div class="mini-bud" id="miniBud"></div>
     <div class="spacer"></div>
     <div class="stato"><span class="dot" id="spia"></span><span id="spiaTxt">salvato</span></div>
   </header>
@@ -18,45 +19,50 @@
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-v="listone" aria-selected="true">Listone</button>
     <button class="tab" role="tab" data-v="squadre" aria-selected="false">Squadre</button>
-    <button class="tab" role="tab" data-v="rosa" aria-selected="false">La mia rosa</button>
+    <button class="tab" role="tab" data-v="rosa" aria-selected="false">Formazioni</button>
     <button class="tab" role="tab" data-v="setup" aria-selected="false">Impostazioni</button>
   </nav>
+
+  <div class="filtri" id="barraFiltri">
+    <div class="cerca">
+      <input id="q" type="search" placeholder="Cerca giocatore o squadra" autocomplete="off">
+      <span class="lente">⌕</span><span class="slash">/</span>
+    </div>
+    <div class="seg" role="group" aria-label="Ruolo">
+      <button data-ruolo="" aria-pressed="true">Tutti<span class="kb">T</span></button>
+      <button data-ruolo="P" aria-pressed="false">Por<span class="kb">P</span></button>
+      <button data-ruolo="D" aria-pressed="false">Dif<span class="kb">D</span></button>
+      <button data-ruolo="C" aria-pressed="false">Cen<span class="kb">C</span></button>
+      <button data-ruolo="A" aria-pressed="false">Att<span class="kb">A</span></button>
+    </div>
+    <button class="tog" id="togLiberi" aria-pressed="false">Liberi<span class="kb">L</span></button>
+    <button class="tog" id="togMiei" aria-pressed="false">I miei<span class="kb">M</span></button>
+    <button class="tog" id="togRig" aria-pressed="false">Rigoristi<span class="kb">R</span></button>
+    <select class="filtro" id="selSquadra"><option value="">Tutte le squadre</option></select>
+    <span class="conta" id="conta"></span>
+  </div>
 
   <main class="corpo" id="corpo">
     <!-- LISTONE -->
     <section id="vListone">
-      <div class="filtri" id="barraFiltri">
-        <div class="cerca">
-          <input id="q" type="search" placeholder="Cerca giocatore o squadra" autocomplete="off">
-          <span class="lente">⌕</span><span class="slash">/</span>
-        </div>
-        <div class="seg" role="group" aria-label="Ruolo">
-          <button data-ruolo="" aria-pressed="true">Tutti</button>
-          <button data-ruolo="P" aria-pressed="false">Portieri</button>
-          <button data-ruolo="D" aria-pressed="false">Difensori</button>
-          <button data-ruolo="C" aria-pressed="false">Centrocamp.</button>
-          <button data-ruolo="A" aria-pressed="false">Attaccanti</button>
-        </div>
-        <button class="tog" id="togLiberi" aria-pressed="false">Solo liberi<span class="kb">L</span></button>
-        <button class="tog" id="togMiei" aria-pressed="false">I miei<span class="kb">M</span></button>
-        <select class="filtro" id="selSquadra"><option value="">Tutte le squadre</option></select>
-        <span class="conta" id="conta"></span>
-      </div>
       <div id="sezioni"></div>
     </section>
 
     <!-- SQUADRE -->
     <section id="vSquadre" class="hide"><div class="griglia" id="griglia"></div></section>
 
-    <!-- LA MIA ROSA -->
-    <section id="vRosa" class="hide"><div id="boxRosa"></div></section>
+    <!-- FORMAZIONI -->
+    <section id="vRosa" class="hide">
+      <div class="chips" id="chipsPart"></div>
+      <div id="boxRosa"></div>
+    </section>
 
     <!-- IMPOSTAZIONI -->
     <section id="vSetup" class="hide">
       <div class="pannello">
         <h3>Partecipanti</h3>
         <p class="aiuto">Quanti siete e come vi chiamate. Segna qual è la tua squadra:
-          quella finisce nella scheda «La mia rosa».</p>
+          quella parte selezionata nelle formazioni e colora le righe nel listone.</p>
         <div class="campo-f"><label for="nPart">Numero di partecipanti</label>
           <input type="number" id="nPart" min="2" max="20" step="1"></div>
         <div id="nomi"></div>
@@ -79,9 +85,8 @@
 
       <div class="pannello">
         <h3>Listone</h3>
-        <p class="aiuto">Quando ti aggiorno il file Excel del listone, caricalo qui:
-          Fantasta rilegge nomi, statistiche e ordine, e tiene le assegnazioni
-          dei giocatori che ci sono ancora.</p>
+        <p class="aiuto">Quando esce un listone aggiornato, caricalo qui: Fantasta rilegge nomi,
+          statistiche, rigoristi e ordine, e tiene le assegnazioni dei giocatori che ci sono ancora.</p>
         <div class="bottoni">
           <button class="btn oro" id="btnListone">Carica un listone aggiornato…</button>
           <button class="btn" id="btnListoneStd">Torna a quello di serie</button>
