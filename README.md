@@ -37,6 +37,20 @@ L'asta si salva da sola a ogni mossa in `~/Library/Application Support/Fantasta/
 | `⌘E` | scarica l'Excel finale |
 | `⌘1`…`⌘4` | cambia scheda |
 
+## Installazione
+
+**Mac (Apple Silicon)** — apri il `.dmg` e trascina Fantasta in Applicazioni.
+Non e' firmata: al primo avvio tasto destro sull'app > Apri.
+
+**Windows** — due strade:
+- `Fantasta-...-portatile.exe`: si avvia com'e', senza installare nulla.
+- `Fantasta-...-x64-installer.exe` (o `-arm64-`): installa l'app con collegamento
+  sul desktop e nel menu Start.
+
+Anche su Windows l'app non e' firmata: SmartScreen mostra "Windows ha protetto
+il PC", si prosegue con **Ulteriori informazioni > Esegui comunque**.
+I dati stanno in `%APPDATA%\Fantasta`.
+
 ## Sviluppo
 
 ```bash
@@ -44,7 +58,10 @@ npm install
 npm start          # avvia in sviluppo
 npm run smoke      # prova automatica, stampa SMOKE {...}
 npm run dist       # compila il .dmg per Mac Apple Silicon
+npm run dist:win   # compila installer ed eseguibile portatile per Windows
 ```
+
+Le scorciatoie indicate con `⌘` su Mac usano `Ctrl` su Windows.
 
 Il formato `.xlsx` è letto e scritto da `xlsx.js`, senza librerie esterne.
 

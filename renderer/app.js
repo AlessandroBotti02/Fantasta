@@ -543,6 +543,7 @@ async function azzera() {
 
 /* ─────────────── avvio ─────────────── */
 async function avvia() {
+  document.documentElement.dataset.os = (api && api.os) || "darwin";
   LIST = (await api.listoneLeggi()) || {};
   for (const sez of SEZIONI) if (!Array.isArray(LIST[sez])) LIST[sez] = [];
   indicizza();

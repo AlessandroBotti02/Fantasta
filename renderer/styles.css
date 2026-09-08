@@ -3,6 +3,7 @@
    quello che è tuo, rosa per quello che ti hanno soffiato.
    Testo grande e righe alte: si legge di sera, di fretta, da lontano. */
 :root{
+  color-scheme:light;
   --bg:#F7F7FB; --surface:#FFFFFF; --surface-2:#EFF0F7; --surface-3:#E3E5F1;
   --ink:#14162A; --ink-2:#454A66; --muted:#5B6182;
   --line:#E2E4F0; --line-2:#C7CADC;
@@ -13,11 +14,13 @@
   --shadow:0 1px 2px rgba(20,22,42,.06), 0 10px 26px -14px rgba(20,22,42,.30);
   --shadow-lift:0 2px 6px rgba(20,22,42,.10), 0 24px 48px -18px rgba(20,22,42,.40);
   --r:12px; --r-sm:8px;
-  --fd:-apple-system,BlinkMacSystemFont,'Helvetica Neue','Segoe UI',Arial,sans-serif;
+  --fd:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#10111C; --surface:#191B29; --surface-2:#232537; --surface-3:#2D3047;
+    color-scheme:dark;
+    color-scheme:dark;
+  --bg:#10111C; --surface:#191B29; --surface-2:#232537; --surface-3:#2D3047;
     --ink:#F0F1F8; --ink-2:#B4B8CE; --muted:#9AA0BC;
     --line:#272A41; --line-2:#3A3E5C;
     --accent:#FFC062; --accent-solid:#FFB84D; --accent-ink:#1A1204; --accent-soft:#3A2C12;
@@ -53,14 +56,14 @@ h1,h2,h3{margin:0}
 
 /* ── testata ─────────────────────────────────────────────────────── */
 .app{display:flex;flex-direction:column;height:100vh}
-.top{-webkit-app-region:drag;padding:11px 20px 0 88px;background:var(--bg);
+.top{-webkit-app-region:drag;padding:11px 20px 0;background:var(--bg);
   display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.brand{font-size:18px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+.brand{font-size:18px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
 .brand span{color:var(--brand)}
 .top .spacer{flex:1}
 .mini-bud{display:flex;gap:16px;font-size:12.5px;color:var(--muted);
   -webkit-app-region:no-drag;align-items:baseline}
-.mini-bud b{color:var(--ink);font-weight:750;font-size:15px}
+.mini-bud b{color:var(--ink);font-weight:700;font-size:15px}
 .mini-bud b.oro{color:var(--accent)}
 .mini-bud b.rosso{color:var(--taken)}
 .stato{font-size:11.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;
@@ -70,7 +73,7 @@ h1,h2,h3{margin:0}
 
 .tabs{display:flex;gap:3px;padding:9px 20px 0;background:var(--bg);
   border-bottom:1px solid var(--line);-webkit-app-region:no-drag}
-.tab{padding:9px 17px 11px;font-size:13.5px;font-weight:680;letter-spacing:.01em;
+.tab{padding:9px 17px 11px;font-size:13.5px;font-weight:600;letter-spacing:.01em;
   color:var(--muted);border-bottom:2.5px solid transparent;margin-bottom:-1px;border-radius:7px 7px 0 0}
 .tab:hover{color:var(--ink);background:var(--surface-2)}
 .tab[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand);background:transparent}
@@ -93,13 +96,13 @@ h1,h2,h3{margin:0}
 .cerca input:focus+.lente+.slash,.cerca input:not(:placeholder-shown)+.lente+.slash{opacity:0}
 
 .seg{display:flex;background:var(--surface-2);border-radius:10px;padding:3px;gap:3px}
-.seg button{padding:7px 14px;border-radius:7px;font-size:13.5px;font-weight:680;color:var(--muted)}
+.seg button{padding:7px 14px;border-radius:7px;font-size:13.5px;font-weight:600;color:var(--muted)}
 .seg button:hover{color:var(--ink)}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
 .seg button .kb{font-size:10px;opacity:.5;margin-left:5px}
 
 .tog{padding:8px 14px;border-radius:10px;border:1.5px solid var(--line-2);font-size:13.5px;
-  font-weight:660;color:var(--muted);background:var(--surface);white-space:nowrap}
+  font-weight:600;color:var(--muted);background:var(--surface);white-space:nowrap}
 .tog:hover{border-color:var(--ink-2);color:var(--ink)}
 .tog[aria-pressed="true"]{background:var(--accent-solid);border-color:var(--accent-solid);
   color:var(--accent-ink)}
@@ -111,13 +114,13 @@ select.filtro{padding:8px 12px;border-radius:10px;border:1.5px solid var(--line-
 /* ── tabella ─────────────────────────────────────────────────────── */
 .sez{margin-top:20px}
 .sez h2{position:sticky;top:0;z-index:11;background:var(--bg);padding:6px 0 4px;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
-  font-weight:780;margin-bottom:8px;display:flex;gap:10px;align-items:baseline}
+  font-weight:700;margin-bottom:8px;display:flex;gap:10px;align-items:baseline}
 .sez h2 em{font-style:normal;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
 table{width:100%;border-collapse:collapse;background:var(--surface);
   border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 thead th{position:sticky;top:0;z-index:10;background:var(--surface-3);
   font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);
-  font-weight:780;padding:9px 10px;text-align:left;white-space:nowrap;
+  font-weight:700;padding:9px 10px;text-align:left;white-space:nowrap;
   box-shadow:inset 0 -1.5px 0 var(--line-2)}
 tbody td{padding:8px 10px;border-top:1px solid var(--line)}
 tbody tr:nth-child(even) td{background:color-mix(in srgb, var(--surface-2) 45%, transparent)}
@@ -128,7 +131,7 @@ tr.mia td{background:var(--mine-bg) !important;color:var(--ink)}
 tr.mia .nome b{color:var(--mine)}
 .cPos{width:46px;text-align:center;color:var(--muted);font-size:12.5px}
 .nome{min-width:150px}
-.nome b{font-weight:720;font-size:15px}
+.nome b{font-weight:700;font-size:15px}
 .nome small{display:block;color:var(--muted);font-size:11.5px;margin-top:1px}
 .cSq{font-size:13px;color:var(--ink-2);white-space:nowrap}
 .cN{width:54px;text-align:center;font-size:13.5px}
@@ -142,7 +145,7 @@ tr.mia .nome b{color:var(--mine)}
 .rig.due{opacity:.72}
 
 .assegna{padding:6px 13px;border-radius:100px;border:1.5px solid var(--line-2);font-size:13px;
-  font-weight:680;color:var(--muted);white-space:nowrap;background:var(--surface)}
+  font-weight:600;color:var(--muted);white-space:nowrap;background:var(--surface)}
 .assegna:hover{border-color:var(--accent-solid);color:var(--accent)}
 .assegna.presa{border-color:var(--taken);background:var(--taken-bg);color:var(--taken)}
 .assegna.mia{border-color:var(--mine);background:var(--mine-bg);color:var(--mine)}
@@ -151,7 +154,7 @@ tr.mia .nome b{color:var(--mine)}
 .pop{position:fixed;z-index:60;background:var(--surface);border:1.5px solid var(--line-2);
   border-radius:var(--r);box-shadow:var(--shadow-lift);padding:14px;width:290px}
 .pop .chi{font-size:16px;margin-bottom:12px;line-height:1.3;color:var(--muted)}
-.pop .chi b{display:block;font-weight:780;font-size:19px;color:var(--ink)}
+.pop .chi b{display:block;font-weight:700;font-size:19px;color:var(--ink)}
 .pop .prezzo{display:flex;align-items:center;gap:9px;margin-bottom:12px}
 .pop .prezzo input{width:96px;padding:9px 12px;border-radius:9px;border:1.5px solid var(--line-2);
   background:var(--surface-2);font-size:16px;font-variant-numeric:tabular-nums;font-weight:700}
@@ -161,7 +164,7 @@ tr.mia .nome b{color:var(--mine)}
 .pop .elenco button{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:8px;
   font-size:14.5px;text-align:left;width:100%}
 .pop .elenco button:hover{background:var(--surface-2)}
-.pop .elenco button.io{color:var(--mine);font-weight:750}
+.pop .elenco button.io{color:var(--mine);font-weight:700}
 .pop .elenco button .kb{margin-left:auto;font-size:11px;color:var(--muted);
   border:1px solid var(--line-2);border-radius:4px;padding:0 6px}
 .pop .elenco button.libera{color:var(--taken);border-top:1px solid var(--line);
@@ -172,18 +175,18 @@ tr.mia .nome b{color:var(--mine)}
 .scheda{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:15px;box-shadow:var(--shadow)}
 .scheda.io{border-color:var(--mine);box-shadow:0 0 0 1.5px var(--mine),var(--shadow)}
-.scheda h3{font-size:17px;font-weight:780;display:flex;align-items:center;gap:8px}
+.scheda h3{font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px}
 .scheda h3 .bollo{font-size:10px;letter-spacing:.06em;padding:2px 8px;border-radius:100px;
   background:var(--mine);color:var(--bg);font-weight:800;text-transform:uppercase}
-.scheda h3 .vedi{margin-left:auto;font-size:12px;font-weight:680;color:var(--brand)}
+.scheda h3 .vedi{margin-left:auto;font-size:12px;font-weight:600;color:var(--brand)}
 .crediti{display:flex;gap:15px;margin:10px 0 12px;font-size:13px;color:var(--muted)}
-.crediti b{color:var(--ink);font-weight:780;font-size:15px}
+.crediti b{color:var(--ink);font-weight:700;font-size:15px}
 .crediti b.oro{color:var(--accent)}
 .crediti b.rosso{color:var(--taken)}
 .caselle{display:flex;gap:6px;margin-bottom:12px}
 .casella{flex:1;text-align:center;padding:7px 3px;border-radius:8px;background:var(--surface-2);
   font-size:11px;color:var(--muted);letter-spacing:.05em;font-weight:700}
-.casella b{display:block;font-size:16px;color:var(--ink);font-weight:780}
+.casella b{display:block;font-size:16px;color:var(--ink);font-weight:700}
 .casella.piena{background:var(--mine-bg)}
 .casella.piena b{color:var(--mine)}
 .rosa{list-style:none;margin:0;padding:0;font-size:13.5px}
@@ -196,7 +199,7 @@ tr.mia .nome b{color:var(--mine)}
 /* ── formazione ──────────────────────────────────────────────────── */
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0 4px}
 .chip{padding:8px 15px;border-radius:100px;border:1.5px solid var(--line-2);font-size:13.5px;
-  font-weight:680;background:var(--surface);color:var(--muted)}
+  font-weight:600;background:var(--surface);color:var(--muted)}
 .chip:hover{border-color:var(--ink-2);color:var(--ink)}
 .chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
 .chip .n{opacity:.7;margin-left:6px;font-size:12px}
@@ -210,14 +213,14 @@ tr.mia .nome b{color:var(--mine)}
 .gio{background:var(--surface);border:1.5px solid var(--line-2);border-radius:10px;
   padding:9px 13px;min-width:118px;text-align:center;box-shadow:var(--shadow);position:relative}
 .gio:hover{border-color:var(--brand)}
-.gio b{display:block;font-size:14px;font-weight:780}
+.gio b{display:block;font-size:14px;font-weight:700}
 .gio span{font-size:11px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
 .gio .rig{position:absolute;top:-8px;right:-6px;margin:0}
 .gio .pz{position:absolute;top:-8px;left:-6px;font-size:10.5px;font-weight:800;
   background:var(--accent-solid);color:var(--accent-ink);border-radius:100px;padding:1px 7px}
 .moduli{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px}
 .moduli .m{padding:7px 13px;border-radius:100px;border:1.5px solid var(--line-2);
-  font-size:13.5px;font-weight:680;background:var(--surface)}
+  font-size:13.5px;font-weight:600;background:var(--surface)}
 .moduli .m[aria-pressed="true"]{background:var(--accent-solid);color:var(--accent-ink);
   border-color:var(--accent-solid)}
 .moduli .m:disabled{opacity:.3;cursor:not-allowed}
@@ -230,7 +233,7 @@ tr.mia .nome b{color:var(--mine)}
 /* ── impostazioni ────────────────────────────────────────────────── */
 .pannello{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:19px;box-shadow:var(--shadow);margin-top:18px;max-width:760px}
-.pannello h3{font-size:16px;font-weight:780}
+.pannello h3{font-size:16px;font-weight:700}
 .pannello p.aiuto{color:var(--muted);font-size:14px;margin:6px 0 16px;line-height:1.5}
 .campo-f{display:flex;align-items:center;gap:11px;margin-bottom:10px;flex-wrap:wrap}
 .campo-f label{font-size:13.5px;color:var(--ink-2);min-width:150px}
@@ -239,7 +242,7 @@ tr.mia .nome b{color:var(--mine)}
 .campo-f input[type=text]{min-width:210px}
 .campo-f input[type=number]{width:88px}
 .btn{padding:10px 16px;border-radius:10px;border:1.5px solid var(--line-2);background:var(--surface);
-  font-size:14px;font-weight:680;display:inline-flex;align-items:center;gap:7px}
+  font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
 .btn:hover{border-color:var(--ink-2)}
 .btn.oro{background:var(--accent-solid);color:var(--accent-ink);border-color:var(--accent-solid)}
 .btn.oro:hover{filter:brightness(1.06)}
@@ -251,10 +254,11 @@ tr.mia .nome b{color:var(--mine)}
 .vuoto{padding:28px;text-align:center;color:var(--muted);font-size:15px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(calc(100% + 44px));
   background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:100px;font-size:14px;
-  font-weight:680;box-shadow:var(--shadow-lift);z-index:80;
+  font-weight:600;box-shadow:var(--shadow-lift);z-index:80;
   transition:transform .25s cubic-bezier(.2,.8,.3,1);max-width:min(88vw,480px);text-align:center}
 .toast.su{transform:translateX(-50%) translateY(0)}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
 
 @media (max-width:1060px){ .cCamp,.cFm{display:none} }
-@media (max-width:720px){ .cSq{display:none} .top{padding-left:82px} .mini-bud{display:none} }
+html[data-os="darwin"] .top{padding-left:88px}
+@media (max-width:720px){ .cSq{display:none} .mini-bud{display:none} }

@@ -5,6 +5,7 @@ const fs = require("fs");
 const { leggiXlsx, scriviXlsx } = require("./xlsx.js");
 
 const SMOKE = process.argv.includes("--smoke");
+const MAC = process.platform === "darwin";
 let win = null;
 
 /* ─────────────── dove vive lo stato ─────────────── */
@@ -13,11 +14,32 @@ const fileStato = () => path.join(cartella(), "asta.json");
 const fileListone = () => path.join(cartella(), "listone.json");
 const listoneDiSerie = () => path.join(__dirname, "renderer", "listone.json");
 
+function attendi(ms) {                      // pausa sincrona, serve fra un tentativo e l'altro
+  try { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); } catch (e) { /* pazienza */ }
+}
 function scriviAtomico(percorso, testo) {
   const tmp = percorso + ".tmp";
   fs.mkdirSync(path.dirname(percorso), { recursive: true });
   fs.writeFileSync(tmp, testo, "utf8");
-  fs.renameSync(tmp, percorso);
+  // su Windows l'antivirus o l'indicizzatore possono tenere aperto il file appena scritto
+  for (let tentativo = 0; ; tentativo++) {
+    try { fs.renameSync(tmp, percorso); return; }
+    catch (e) {
+      const ritentabile = e && ["EPERM", "EBUSY", "EACCES"].includes(e.code);
+      if (!ritentabile || tentativo >= 4) {
+        try { fs.unlinkSync(tmp); } catch (e2) { /* gia' sparito */ }
+        throw e;
+      }
+      attendi(60);
+    }
+  }
+}
+function spiegaErrore(e) {
+  if (e && ["EBUSY", "EPERM", "EACCES"].includes(e.code))
+    return "non riesco a scrivere il file: forse e' gia' aperto in un altro programma, " +
+           "oppure la cartella e' protetta. Chiudilo o scegli un'altra cartella.";
+  if (e && e.code === "ENOSPC") return "spazio esaurito sul disco.";
+  return (e && e.message) || String(e);
 }
 function leggiJson(percorso) {
   try { return JSON.parse(fs.readFileSync(percorso, "utf8")); } catch (e) { return null; }
@@ -111,13 +133,13 @@ function creaFinestra() {
   win = new BrowserWindow({
     width: 1440, height: 900, minWidth: 900, minHeight: 600,
     title: "Fantasta",
-    backgroundColor: "#0E1418",
-    titleBarStyle: "hiddenInset",
+    backgroundColor: "#10111C",
+    ...(MAC ? { titleBarStyle: "hiddenInset" } : {}),
     show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true, nodeIntegration: false, sandbox: false,
-      additionalArguments: SMOKE ? ["--smoke"] : [],
+      additionalArguments: (SMOKE ? ["--smoke"] : []).concat("--os=" + process.platform),
     },
   });
   if (SMOKE) {
@@ -147,9 +169,7 @@ function creaFinestra() {
 
 function creaMenu() {
   const invia = (canale) => () => win && win.webContents.send(canale);
-  Menu.setApplicationMenu(Menu.buildFromTemplate([
-    { role: "appMenu" },
-    {
+  const menuAsta = {
       label: "Asta",
       submenu: [
         { label: "Aggiorna il listone da Excel...", accelerator: "CmdOrCtrl+L", click: invia("menu:aggiornaListone") },
@@ -160,8 +180,12 @@ function creaMenu() {
         { label: "Scarica l'Excel finale...", accelerator: "CmdOrCtrl+E", click: invia("menu:excel") },
         { type: "separator" },
         { label: "Azzera l'asta", click: invia("menu:azzera") },
+        ...(MAC ? [] : [{ type: "separator" }, { role: "quit", label: "Esci" }]),
       ],
-    },
+  };
+  Menu.setApplicationMenu(Menu.buildFromTemplate([
+    ...(MAC ? [{ role: "appMenu" }] : []),
+    menuAsta,
     { role: "editMenu" },
     {
       label: "Vista",
@@ -223,14 +247,16 @@ ipcMain.handle("backup:esporta", async (_e, stato) => {
     filters: [{ name: "Backup Fantasta", extensions: ["json"] }],
   });
   if (r.canceled || !r.filePath) return { annullato: true };
-  try { scriviAtomico(r.filePath, JSON.stringify(stato, null, 1)); return { ok: true, file: r.filePath }; }
-  catch (e) { return { errore: e.message }; }
+  const dest = /\.json$/i.test(r.filePath) ? r.filePath : r.filePath + ".json";
+  try { fs.writeFileSync(dest, JSON.stringify(stato, null, 1), "utf8"); return { ok: true, file: dest }; }
+  catch (e) { return { errore: spiegaErrore(e) }; }
 });
 
 ipcMain.handle("backup:importa", async () => {
   const r = await dialog.showOpenDialog(win, {
     title: "Scegli il backup da caricare",
-    filters: [{ name: "Backup Fantasta", extensions: ["json"] }],
+    filters: [{ name: "Backup Fantasta", extensions: ["json"] },
+              { name: "Tutti i file", extensions: ["*"] }],
     properties: ["openFile"],
   });
   if (r.canceled || !r.filePaths.length) return { annullato: true };
@@ -247,13 +273,14 @@ ipcMain.handle("excel:esporta", async (_e, fogli) => {
     filters: [{ name: "Excel", extensions: ["xlsx"] }],
   });
   if (r.canceled || !r.filePath) return { annullato: true };
-  try { fs.writeFileSync(r.filePath, scriviXlsx(fogli)); return { ok: true, file: r.filePath }; }
-  catch (e) { return { errore: e.message }; }
+  const dest = /\.xlsx$/i.test(r.filePath) ? r.filePath : r.filePath + ".xlsx";
+  try { fs.writeFileSync(dest, scriviXlsx(fogli)); return { ok: true, file: dest }; }
+  catch (e) { return { errore: spiegaErrore(e) }; }
 });
 
 ipcMain.handle("conferma", async (_e, { titolo, testo, ok }) => {
   const r = await dialog.showMessageBox(win, {
-    type: "warning", buttons: [ok || "Procedi", "Annulla"], defaultId: 1, cancelId: 1,
+    type: "warning", buttons: [ok || "Procedi", "Annulla"], defaultId: 1, cancelId: 1, noLink: true,
     message: titolo, detail: testo,
   });
   return r.response === 0;
@@ -270,7 +297,15 @@ function fineSmoke(esito, codice) {
 }
 ipcMain.on("smoke:esito", (_e, esito) => fineSmoke(esito, esito && esito.ok ? 0 : 1));
 
-app.whenReady().then(() => {
+const soloUnaIstanza = SMOKE || app.requestSingleInstanceLock();
+if (!soloUnaIstanza) app.quit();
+else app.on("second-instance", () => {
+  if (!win) return;
+  if (win.isMinimized()) win.restore();
+  win.show(); win.focus();
+});
+
+if (soloUnaIstanza) app.whenReady().then(() => {
   creaMenu();
   creaFinestra();
   app.on("activate", () => { if (BrowserWindow.getAllWindows().length === 0) creaFinestra(); });

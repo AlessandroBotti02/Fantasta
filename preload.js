@@ -21,4 +21,5 @@ contextBridge.exposeInMainWorld("fantasta", {
     ipcRenderer.on("menu:vista", (_e, v) => fn("vista", v));
   },
   smokeAttivo: process.argv.includes("--smoke"),
+  os: (process.argv.find((a) => a.startsWith("--os=")) || "--os=").slice(5) || process.platform,
 });

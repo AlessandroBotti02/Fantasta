@@ -10,7 +10,8 @@
   "scripts": {
     "start": "electron .",
     "smoke": "electron . --smoke",
-    "dist": "electron-builder --mac --arm64"
+    "dist": "electron-builder --mac --arm64",
+    "dist:win": "electron-builder --win --x64 --arm64"
   },
   "build": {
     "appId": "it.inema.fantasta",
@@ -46,6 +47,47 @@
     },
     "dmg": {
       "title": "Fantasta"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Fantasta",
+      "installerLanguages": [
+        "it_IT",
+        "en_US"
+      ],
+      "language": "1040",
+      "artifactName": "${productName}-${version}-${arch}-installer.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portatile.${ext}"
     }
   },
   "devDependencies": {
